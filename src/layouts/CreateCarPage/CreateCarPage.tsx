@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {FileUpload} from 'primereact/fileupload';
+import {Toast} from "primereact/toast";
 
 export const CreateCarPage = () => {
 
@@ -13,10 +14,16 @@ export const CreateCarPage = () => {
     const [priceError, setPriceError] = useState("");
 
     const [brandSelection, setBrandSelection] = useState("");
+    const [brandError, setBrandError] = useState("");
     const [typeSelection, setTypeSelection] = useState("");
+    const [typeError, setTypeError] = useState("");
     const [gearSelection, setGearSelection] = useState("");
+    const [gearError, setGearError] = useState("");
     const [engineSelection, setEngineSelection] = useState("");
+    const [engineError, setEngineError] = useState("");
     const [image, setImage] = useState<string | ArrayBuffer | null>();
+
+    const toastTopRight = useRef(null);
     const customBase64Uploader = async (event: any) => {
         // convert file to base64 encoded
         const file = event.files[0];
@@ -105,9 +112,105 @@ export const CreateCarPage = () => {
         }
     }
 
+    const showError = (message: string) => {
+        // @ts-ignore
+        toastTopRight.current.show({severity: 'error', summary: 'Signup Failed', detail: message, life: 3000});
+    }
+
+    const showSuccess = (message: string) => {
+        // @ts-ignore
+        toastTopRight.current.show({severity: 'success', summary: 'Signup Successful', detail: message, life: 3000});
+    }
+
     return (
-        <div className='container-fluid py-5 d-flex justify-content-center align-items-center'>
-            <form>
+        <div className='signupPage-main'>
+            <Toast ref={toastTopRight} position="top-right"/>
+            <div className='loginContainer'>
+                <form action="">
+                    <h1>Create Car</h1>
+                    <div className="input-boxes">
+                        <div className="loginBox">
+                            <label className="text-black" htmlFor="licence-plate">Licence Plate</label>
+                            <input type="text" name="licenceplate"
+                                   id="licence-plate"
+                                   value={licencePlate}
+                                   style={{width: "300px"}}
+                                   onChange={ev => setLicencePlate(ev.target.value)}
+                                   className={"form-control me-2"}
+                                   placeholder="Enter Licence Plate" required/>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{licencePlateError}</label>
+                        <div className="select-container">
+                            <label className="text-black" htmlFor="brand">Car Brand</label>
+                            <select className="select-box btn main-color btn-secondary dropdown-toggle" name="car-brand"
+                                    id="brand"
+                                    style={{width: "300px"}}
+                                    onChange={ev => setBrandSelection(ev.target.value)}
+                                    value={brandSelection} required>
+                                <option value="" defaultValue={""}>Select Car Brand</option>
+                                <option value="Mercedes">Mercedes-Benz</option>
+                                <option value="Volkswagen">Volkswagen</option>
+                                <option value="Peugeot">Peugeot</option>
+                                <option value="Audi">Audi</option>
+                                <option value="Renault">Renault</option>
+                            </select>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{brandError}</label>
+                        <div className="select-container">
+                            <label className="text-black" htmlFor="car-type">Car Type</label>
+                            <select className="select-box  btn main-color btn-secondary dropdown-toggle" name="car-type" id="car-type"
+                                    style={{width: "300px"}}
+                                    onChange={ev => setTypeSelection(ev.target.value)}
+                                    value={typeSelection} required>
+                                <option value="" defaultValue={""}>Select Car Type</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Truck">Truck</option>
+                            </select>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{typeError}</label>
+                        <div className="loginBox">
+                            <label className="text-black" htmlFor="model">Car Model</label>
+                            <input type="text" name="car-model" id="model" value={carModel}
+                                   style={{width: "300px"}}
+                                   onChange={ev => setCarModel(ev.target.value)}
+                                   placeholder="Enter Car Model" required/>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{carModelError}</label>
+                        <div className="select-container">
+                            <label className="text-black" htmlFor="gear-type">Gear Type</label>
+                            <select className="select-box  btn main-color btn-secondary dropdown-toggle" name="gear-type" id="gear-type"
+                                    style={{width: "300px"}}
+                                    onChange={ev => setGearSelection(ev.target.value)}
+                                    value={gearSelection} required>
+                                <option value="" defaultValue={""}>Select Gear Type</option>
+                                <option value="Automatic">Automatic</option>
+                                <option value="Manual">Manual</option>
+                            </select>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{gearError}</label>
+                        <div className="select-container">
+                            <label className="text-black" htmlFor="engine-type">Engine Type</label>
+                            <select className="select-box  btn main-color btn-secondary dropdown-toggle" name="gear-type" id="gear-type"
+                                    style={{width: "300px"}}
+                                    onChange={ev => setEngineSelection(ev.target.value)}
+                                    value={engineSelection} required>
+                                <option value="" defaultValue={""}>Select Engine Type</option>
+                                <option value="Placeholder 1">Placeholder 1</option>
+                                <option value="Placeholder 2">Placeholder 2</option>
+                                <option value="Placeholder 3">Placeholder 3</option>
+                            </select>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{engineError}</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
+    // className='container-fluid py-5 d-flex justify-content-center align-items-center'
+
+    {/*<form>
                 <table className={'justify-content-center align-items-center'}>
                     <tbody>
                     <tr>
@@ -301,10 +404,7 @@ export const CreateCarPage = () => {
                     </tr>
                     </tbody>
                 </table>
-            </form>
+            </form>*/
+    }
 
-        </div>
-
-
-    );
 }
