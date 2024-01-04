@@ -87,14 +87,23 @@ export const ReservationBox: React.FC<{
                         </p>
                     </div>
                 </div>
-                {!signedIn && <Link to='/login' className='btn btn-success btn-lg'>Sign In</Link>}
-                {signedIn &&
+                {!signedIn && props.car?.isAvailable &&
+                    <Link to='/login' className='btn btn-success btn-lg'>Sign In</Link>}
+                {signedIn && props.car?.isAvailable &&
                     <button className='btn btn-success btn-lg' onClick={onButtonClick}>Reservation</button>}
                 <hr/>
-                <p className='mt-3'>
-                    This number can change until reservation has been complete.
-                </p>
-                {!signedIn &&
+                {props.car?.isAvailable &&
+                    <p className='mt-3'>
+                        This number can change until reservation has been complete.
+                    </p>}
+
+                {!props.car?.isAvailable &&
+                    <p className='mt-3'>
+                        This car is currently not available for renting.
+                    </p>
+                }
+
+                {!signedIn && props.car?.isAvailable &&
                     <p>
                         Sign in to be able to rent the car.
                     </p>

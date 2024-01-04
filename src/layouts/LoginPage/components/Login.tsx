@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {Toast} from "primereact/toast";
 
 export const Login = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [usernameError, setUsernameError] = useState("")
     const [passwordError, setPasswordError] = useState("")
+    const toastTopRight = useRef(null);
 
     const navigate = useNavigate();
 
@@ -40,15 +42,18 @@ export const Login = () => {
         const loginResponse = await fetch(url, requestOptions);
         if (!loginResponse.ok) {
             console.log('Invalid credentials');
+            showError();
+            setUsername("");
+            setPassword("");
+        } else {
+            const responseData = await loginResponse.json();
+            console.log(responseData.authToken);
+            localStorage.setItem("token", responseData.authToken);
+            localStorage.setItem("username", responseData.username);
+            localStorage.setItem("roles", responseData.roles)
+            handleAuthState();
+            navigate('/home');
         }
-        const responseData = await loginResponse.json();
-        console.log(responseData.authToken);
-        localStorage.setItem("token", responseData.authToken);
-        localStorage.setItem("username", responseData.username);
-        localStorage.setItem("roles",responseData.roles)
-        handleAuthState();
-        navigate('/home');
-        // navıgate to /home page -> use same token for each request
     }
 
     const onButtonClick = () => {
@@ -75,42 +80,57 @@ export const Login = () => {
         })
     }
 
-    return (
-        <div className='container-fluid py-5 d-flex justify-content-center align-items-center'>
-           {/* <div className='align-items-center'>
-                <div className={"titleContainer"}>
-                    <div>Login</div>
-                </div>
-                <br/>
-                <div className={"inputContainer"}>
-                    <input
-                        value={username}
-                        placeholder="Enter your username here"
-                        onChange={ev => setUsername(ev.target.value)}
-                        className={"inputBox"}/>
-                    <label className="errorLabel">{usernameError}</label>
-                </div>
-                <br/>
-                <div className={"inputContainer"}>
-                    <input
-                        value={password}
-                        type={"password"}
-                        placeholder="Enter your password here"
-                        onChange={ev => setPassword(ev.target.value)}
-                        className={"inputBox"}/>
-                    <label className="errorLabel">{passwordError}</label>
-                </div>
-                <br/>
-                <div className={"inputContainer"}>
-                    <input
-                        className={"inputButton"}
-                        type="button"
-                        onClick={onButtonClick}
-                        value={"Log in"}/>
-                </div>
-            </div>*/}
+    const showError = () => {
+        // @ts-ignore
+        toastTopRight.current.show({severity:'error', summary: 'Login Failed', detail:'Invalid credentials', life: 3000});
+    }
 
-            <form>
+    return (
+        // 'container-fluid py-5 d-flex justify-content-center align-items-center'
+        <div className="loginPage-main">
+            <Toast ref={toastTopRight} position="top-right" />
+            <div className="loginContainer">
+                <form action="">
+                    <h1>Login</h1>
+                    <div className="input-boxes">
+                        <div className="loginBox">
+                            <label className="text-black" htmlFor="username">Username</label>
+                            <input type="text"
+                                   id="username"
+                                   placeholder="Enter your username"
+                                   style={{ width:"250px" }}
+                                   aria-required={true}
+                                   className={"form-control me-2"}
+                                   onChange={ev => setUsername(ev.target.value)} required/>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{usernameError}</label>
+                        <div className="loginBox">
+                            <label className="text-black align-items-center d-flex" htmlFor="password">Password</label>
+                            <input
+                                value={password}
+                                type={"password"}
+                                placeholder="Enter your password"
+                                style={{ width:"250px" }}
+                                onChange={ev => setPassword(ev.target.value)}
+                                className={"form-control me-2"}/>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{passwordError}</label>
+                        <div className="d-flex justify-content-center">
+                            <input
+                                // "btn main-color btn-sml text-white"
+                                className="btn text-white loginPage-submit-button"
+                                type="button"
+                                onClick={onButtonClick}
+                                value={"Log in"}/>
+                        </div>
+
+                    </div>
+                    <div className="sign-up-link">
+                        <p>Don't have an account? <Link to="/signup">Sign up!</Link></p>
+                    </div>
+                </form>
+            </div>
+            {/*<form>
                 <table className={'justify-content-center align-items-center'}>
                     <tr>
                         <td>Username</td>
@@ -154,7 +174,7 @@ export const Login = () => {
                         </td>
                     </tr>
                 </table>
-            </form>
+            </form>*/}
         </div>
     );
 }

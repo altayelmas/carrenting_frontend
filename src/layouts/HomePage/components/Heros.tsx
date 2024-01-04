@@ -21,7 +21,12 @@ export const Heros = () => {
                                 :
                                 <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
                             }*/}
-                            <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
+                            {localStorage.getItem("authState") === "0" &&
+                                <Link className='btn main-color btn-lg text-white' to='/login'>Login</Link>
+                            }
+                            {localStorage.getItem("authState") !== "0" &&
+                                <Link className='btn main-color btn-lg text-white' to='/search'>Search Cars</Link>
+                            }
                         </div>
                     </div>
                     <div className='row g-0'>
@@ -56,7 +61,12 @@ export const Heros = () => {
                                 :
                                 <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
                             }*/}
-                            <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
+                            {localStorage.getItem("authState") === "0" &&
+                                <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
+                            }
+                            {localStorage.getItem("authState") !== "0" &&
+                                <Link className='btn main-color btn-lg text-white' to='/search'>Search Cars</Link>
+                            }
                         </div>
                     </div>
                     <div className='m-2'>

@@ -11,6 +11,7 @@ import SignUp from "./layouts/SignUpPage/SignUp";
 import {ListCarsPage} from "./layouts/ListCarsPage/ListCarsPage";
 import {ListReservationsPage} from "./layouts/ListReservationsPage/ListReservationsPage";
 import {CreateCarPage} from "./layouts/CreateCarPage/CreateCarPage";
+import {MyReservationsPage} from "./layouts/MyReservationsPage/MyReservationsPage";
 
 export const App = () => {
 
@@ -28,6 +29,7 @@ export const App = () => {
                     <Route path='/createCar' element={<CreateCarPage/>}/>
                     <Route path='/listCars' element={<ListCarsPage/>}/>
                     <Route path='/listReservations' element={<ListReservationsPage/>}/>
+                    <Route path='/myReservations' element={<MyReservationsPage/>}/>
                     <Route path='*' element={<HomePage/>} />
                 </Routes>
                 {/*<BrowserRouter>
