@@ -23,6 +23,12 @@ export const SignUp = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (localStorage.getItem("authState") !== "0") {
+            navigate('/home');
+        }
+    }, []);
+
     const signUp = async () => {
         const url = "http://localhost:8080/user/signup";
         const requestOptions = {
