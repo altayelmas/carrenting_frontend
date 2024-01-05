@@ -39,6 +39,47 @@ export const CreateCarPage = () => {
     }
 
     const onButtonClick = () => {
+        setLicencePlateError("")
+        setBrandError("")
+        setCarModelError("")
+        setTypeError("")
+        setEngineError("")
+        setGearError("")
+        setSeatsError("")
+        setPriceError("")
+        
+        if (licencePlate === "") {
+            setLicencePlateError("Please enter Licence Plate");
+            return
+        }
+        if (brandSelection === "") {
+            setBrandError("Please select a Car Brand");
+            return
+        }
+        if (typeSelection === "") {
+            setTypeError("Please select a Car Type");
+            return
+        }
+        if (carModel === "") {
+            setCarModelError("Please enter a Car Model");
+            return
+        }
+        if (gearSelection === "") {
+            setGearError("Please select a Gear Type");
+            return
+        }
+        if (engineSelection === "") {
+            setEngineError("Please select an Engine Type");
+            return
+        }
+        if (price === "" || +price <= 0) {
+            setPriceError("Please enter a valid Price");
+            return
+        }
+        if (seats === "" || +seats <= 1) {
+            setSeatsError("Please enter a valid Number of Seats");
+            return
+        }
         createCar();
     }
 
@@ -53,8 +94,8 @@ export const CreateCarPage = () => {
                 "carBrand": `${brandSelection}`,
                 "carModel": `${carModel}`,
                 "engine": `${engineSelection}`,
-                "price": `${price}`,
-                "seats": seats,
+                "price": +price,
+                "seats": +seats,
                 "img": `${image}`
             }),
             headers: {
@@ -63,11 +104,21 @@ export const CreateCarPage = () => {
             }
         };
         const response = await fetch(url, requestOptions);
+        const responseJson = await response.json();
         if (!response.ok) {
-            console.log('An error has occured');
+            console.log('An error has occurred');
+            showError(responseJson.message);
+        } else {
+            showSuccess("Operation successful")
+            setLicencePlate("")
+            setBrandSelection("")
+            setCarModel("")
+            setTypeSelection("")
+            setEngineSelection("")
+            setGearSelection("")
+            setSeats("")
+            setPrice("")
         }
-        const responseData = await response.json();
-        console.log(responseData);
     }
 
     const brandField = (value: string) => {
@@ -114,12 +165,12 @@ export const CreateCarPage = () => {
 
     const showError = (message: string) => {
         // @ts-ignore
-        toastTopRight.current.show({severity: 'error', summary: 'Signup Failed', detail: message, life: 3000});
+        toastTopRight.current.show({severity: 'error', summary: 'Operation Failed', detail: message, life: 3000});
     }
 
     const showSuccess = (message: string) => {
         // @ts-ignore
-        toastTopRight.current.show({severity: 'success', summary: 'Signup Successful', detail: message, life: 3000});
+        toastTopRight.current.show({severity: 'success', summary: 'Operation Successful', detail: message, life: 3000});
     }
 
     return (
@@ -197,14 +248,53 @@ export const CreateCarPage = () => {
                                     onChange={ev => setEngineSelection(ev.target.value)}
                                     value={engineSelection} required>
                                 <option value="" defaultValue={""}>Select Engine Type</option>
-                                <option value="Placeholder 1">Placeholder 1</option>
-                                <option value="Placeholder 2">Placeholder 2</option>
-                                <option value="Placeholder 3">Placeholder 3</option>
+                                <option value="Placeholder1">Placeholder 1</option>
+                                <option value="Placeholder2">Placeholder 2</option>
+                                <option value="Placeholder3">Placeholder 3</option>
                             </select>
                         </div>
                         <label className="d-flex text-danger justify-content-center mb-3">{engineError}</label>
+                        <div className="loginBox">
+                            <label className="text-black" htmlFor="price">Price</label>
+                            <input type="number" name="price"
+                                   min="1"
+                                   id="price"
+                                   value={price}
+                                   style={{width: "300px"}}
+                                   onChange={ev => setPrice(ev.target.value)}
+                                   placeholder="Enter Daily Price" required pattern="^[0-9]+$"/>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{priceError}</label>
+                        <div className="loginBox">
+                            <label className="text-black" htmlFor="seats">Number of seats</label>
+                            <input type="number"
+                                   min="1"
+                                   name="seats"
+                                   id="seats"
+                                   value={seats}
+                                   style={{width: "300px"}}
+                                   onChange={ev => setSeats(ev.target.value)}
+                                   placeholder="Enter Number of Seats" required pattern="^[0-9]+$"/>
+                        </div>
+                        <label className="d-flex text-danger justify-content-center mb-3">{seatsError}</label>
+                        <div className="loginBox">
+                            <label className="text-black" htmlFor="image">Image</label>
+                            <FileUpload maxFileSize={1000000}
+                                        mode="basic"
+                                        name="demo[]"
+                                        accept="image/*"
+                                        customUpload onSelect={customBase64Uploader}/>
+                        </div>
                     </div>
                 </form>
+                <div className="loginBox">
+                    <div className="d-flex justify-content-center">
+                        <button className="btn main-color text-white submit-button"
+                                onClick={onButtonClick}
+                                style={{ width:"100px" }}
+                                type="submit">Submit</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
