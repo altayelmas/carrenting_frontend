@@ -115,13 +115,6 @@ export const CarReservationPage = () => {
                     </div>
                     <ReservationBox car={car} mobile={false} numberOfDays={numberOfDays} dates={dates}/>
                 </div>
-                {/*<Calendar
-                    maxDateCount={2}
-                    inline
-                    selectionMode="multiple"
-                    value={dates}
-                    onChange={(e) => onDatesChange(e)}/>*/}
-
                 <hr/>
             </div>
             <div className='container d-lg-none mt-5'>

@@ -19,7 +19,6 @@ export const SignUp = () => {
     const [postCodeError, setPostCodeError] = useState("")
     const [emailError, setEmailError] = useState("")
     const toastTopRight = useRef(null);
-    /*const [showConfirmationBox, setShowConfirmationBox] = useState(false);*/
 
     const navigate = useNavigate();
 
@@ -62,7 +61,6 @@ export const SignUp = () => {
             setEmail("");
             navigate('/signup');
             showSuccess('Signup Successful');
-            /*setShowConfirmationBox(true);*/
         }
 
     }
@@ -75,7 +73,6 @@ export const SignUp = () => {
         setPostCodeError("")
         setEmailError("")
 
-        // Check if the user has entered both fields correctly
         if ("" === username) {
             setUsernameError("Please enter your username")
             return
@@ -132,7 +129,6 @@ export const SignUp = () => {
     }
 
     return (
-        // 'container-fluid py-5 d-flex justify-content-center align-items-center'
         <div className='signupPage-main'>
             <Toast ref={toastTopRight} position="top-right" />
             <div className='loginContainer'>
@@ -477,105 +473,5 @@ export const SignUp = () => {
             </div>
         </div>
     );
-    /*
-        <form>
-            <table className={'justify-content-center align-items-center'}>
-                <tr>
-                    <td>Username</td>
-                    <td>
-                        <input
-                            value={username}
-                            placeholder="Enter your username"
-                            onChange={ev => setUsername(ev.target.value)}
-                            className={"form-control me-2"}/>
-                        <label className="justify-content-right">{usernameError}</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Password</td>
-                    <td>
-                        <input
-                            value={password}
-                            type={"password"}
-                            placeholder="Enter your password"
-                            onChange={ev => setPassword(ev.target.value)}
-                            className={"form-control me-2"}/>
-                        <label className="justify-content-right">{passwordError}</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td>
-                        <input
-                            value={email}
-                            type={"email"}
-                            placeholder="Enter your email"
-                            onChange={ev => setEmail(ev.target.value)}
-                            className={"form-control me-2"}/>
-                        <label className="justify-content-right">{emailError}</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Country</td>
-                    <td>
-                        <input
-                            value={country}
-                            type={"country"}
-                            placeholder="Enter your country"
-                            onChange={ev => setCountry(ev.target.value)}
-                            className={"form-control me-2"}/>
-                        <label className="justify-content-right">{countryError}</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>City</td>
-                    <td>
-                        <input
-                            value={city}
-                            type={"city"}
-                            placeholder="Enter your city"
-                            onChange={ev => setCity(ev.target.value)}
-                            className={"form-control me-2"}/>
-                        <label className="justify-content-right">{cityError}</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Street</td>
-                    <td>
-                        <input
-                            value={street}
-                            type={"street"}
-                            placeholder="Enter your street"
-                            onChange={ev => setStreet(ev.target.value)}
-                            className={"form-control me-2"}/>
-                        <label className="justify-content-right">{streetError}</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Post Code</td>
-                    <td>
-                        <input
-                            value={postCode}
-                            type={"postCode"}
-                            placeholder="Enter your post code"
-                            onChange={ev => setPostCode(ev.target.value)}
-                            className={"form-control me-2"}/>
-                        <label className="justify-content-right">{postCodeError}</label>
-                    </td>
-                </tr>
-                <tr>
-                </tr>
-                <tr className={'container-fluid text-white d-flex justify-content-center align-items-center'}>
-                    <td>
-                        <input
-                            className={"btn main-color btn-sml text-white"}
-                            type="button"
-                            onClick={onButtonClick}
-                            value={"Sign up"}/>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    */
 }
 export default SignUp;

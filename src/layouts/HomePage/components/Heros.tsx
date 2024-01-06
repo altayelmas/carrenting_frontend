@@ -15,12 +15,6 @@ export const Heros = () => {
                             <p className='lead'>
                                 Start browsing our fleet to find your dream car for your vacation!
                             </p>
-                            {/*{authState?.isAuthenticated ?
-                                <Link type='button' className='btn main-color btn-lg text-white'
-                                to='search'>Explore top cars </Link>
-                                :
-                                <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
-                            }*/}
                             {localStorage.getItem("authState") === "0" &&
                                 <Link className='btn main-color btn-lg text-white' to='/login'>Login</Link>
                             }
@@ -55,12 +49,6 @@ export const Heros = () => {
                             <p className='lead'>
                                 Start browsing our fleet to find your dream car for your vacation!
                             </p>
-                            {/*{authState?.isAuthenticated ?
-                                <Link type='button' className='btn main-color btn-lg text-white'
-                                to='search'>Explore top cars </Link>
-                                :
-                                <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
-                            }*/}
                             {localStorage.getItem("authState") === "0" &&
                                 <Link className='btn main-color btn-lg text-white' to='/login'>Sign up</Link>
                             }

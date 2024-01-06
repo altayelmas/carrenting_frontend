@@ -88,19 +88,6 @@ export const Navbar = () => {
                                 <Link type='button' className='btn btn-outline-light' to='/login'>Sign in</Link>
                             </li>
                         }
-
-                        {/*{!authState.isAuthenticated ?
-                            <li className='nav-item m-1'>
-                                <Link type='button' className='btn btn-outline-light' to='/login'>Sign in</Link>
-                            </li>
-                            :
-                            <li>
-                                <button className='btn btn-outline-light' onClick={handleLogOut}>Logout</button>
-                            </li>
-                        }*/}
-                        {/*<li className='nav-item m-1'>
-                            <Link type='button' className='btn btn-outline-light' to='/login'>Sign in</Link>
-                        </li>*/}
                     </ul>
                 </div>
             </div>

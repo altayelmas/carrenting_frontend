@@ -130,51 +130,6 @@ export const Login = () => {
                     </div>
                 </form>
             </div>
-            {/*<form>
-                <table className={'justify-content-center align-items-center'}>
-                    <tr>
-                        <td>Username</td>
-                        <td>
-                            <input
-                                value={username}
-                                placeholder="Enter your username"
-                                onChange={ev => setUsername(ev.target.value)}
-                                className={"form-control me-2"}/>
-                            <label className="justify-content-right">{usernameError}</label>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <br/>
-                    </tr>
-                    <tr>
-                        <td>Password</td>
-                        <td>
-                            <input
-                                value={password}
-                                type={"password"}
-                                placeholder="Enter your password"
-                                onChange={ev => setPassword(ev.target.value)}
-                                className={"form-control me-2"}/>
-                            <label className="justify-content-right">{passwordError}</label>
-                            </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <br/>
-                        </td>
-                    </tr>
-                    <tr className={'container-fluid text-white d-flex justify-content-center align-items-center'}>
-                        <td>
-                            <input
-                                className={"btn main-color btn-sml text-white"}
-                                type="button"
-                                onClick={onButtonClick}
-                                value={"Log in"}/>
-                        </td>
-                    </tr>
-                </table>
-            </form>*/}
         </div>
     );
 }
