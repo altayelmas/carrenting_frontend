@@ -56,7 +56,7 @@ export const ListReservationsPage = () => {
                     reservationId: responseData[key].reservationId,
                     beginDate: responseData[key].beginDate,
                     endDate: responseData[key].endDate,
-                    isValid: responseData[key].isValid,
+                    isValid: responseData[key].valid,
                     username: responseData[key].username,
                     licencePlate: responseData[key].licencePlate,
                 })
