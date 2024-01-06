@@ -1,6 +1,7 @@
 import Car from "../../models/Car";
-import {Link} from "react-router-dom";
-import {FC, useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import React, {FC, useEffect, useRef, useState} from "react";
+import {Toast} from "primereact/toast";
 
 export const ReservationBox: React.FC<{
     car: Car | undefined,
@@ -11,6 +12,9 @@ export const ReservationBox: React.FC<{
     const [signedIn, setSignedIn] = useState<boolean>(false);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [daysError, setDaysError] = useState("");
+    const toastMiddle = useRef(null);
+    const toastTopRight = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         let roles = localStorage.getItem("roles");
@@ -34,6 +38,16 @@ export const ReservationBox: React.FC<{
         }
     }
 
+    const showError = (message: string) => {
+        // @ts-ignore
+        toastTopRight.current.show({severity: 'error', summary: 'Operation Failed', detail: message, life: 3000});
+    }
+
+    const showSuccess = (message: string) => {
+        // @ts-ignore
+        toastMiddle.current.show({severity: 'success', summary: 'Operation Successful', detail: message, life: 3000});
+    }
+
     const reserve = async () => {
         const url = "http://localhost:8080/reservation/createReservation";
         const requestOptions = {
@@ -51,17 +65,23 @@ export const ReservationBox: React.FC<{
             }
         }
         const response = await fetch(url, requestOptions);
-
+        const responseData = await response.json();
         if (!response.ok) {
+            showError(responseData.message)
             console.log('An error has occured');
         } else {
-            const responseData = await response.json();
+            showSuccess("")
             console.log(responseData);
         }
+    }
+    const onRemove = () => {
+        navigate("/myReservations");
     }
 
     return (
         <div className={props.mobile ? 'card d-flex mt-5' : 'card col-3 container d-flex mb-5'}>
+            <Toast ref={toastMiddle} position="center" onRemove={onRemove}/>
+            <Toast ref={toastTopRight} position="top-right"/>
             <div className='card-body container'>
                 <div className='mt-3'>
                     <p>
