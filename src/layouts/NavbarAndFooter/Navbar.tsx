@@ -56,6 +56,11 @@ export const Navbar = () => {
                         <li className='nav-item'>
                             <NavLink className='nav-link' to='/search'>Search Cars</NavLink>
                         </li>
+                        {localStorage.getItem("authState") === "1" &&
+                            <li className='nav-item'>
+                                <NavLink className='nav-link' to='/myReservations'>My Reservations</NavLink>
+                            </li>
+                        }
                         {localStorage.getItem("authState") === "2" &&
                             <li className='nav-item'>
                                 <NavLink className='nav-link' to='/createCar'>Create Cars</NavLink>
