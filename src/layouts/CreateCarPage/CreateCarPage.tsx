@@ -1,6 +1,7 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {FileUpload} from 'primereact/fileupload';
 import {Toast} from "primereact/toast";
+import {useNavigate} from "react-router-dom";
 
 export const CreateCarPage = () => {
 
@@ -24,6 +25,15 @@ export const CreateCarPage = () => {
     const [image, setImage] = useState<string | ArrayBuffer | null>();
 
     const toastTopRight = useRef(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("authState") !== "2") {
+            navigate('/home');
+        }
+    }, []);
+
     const customBase64Uploader = async (event: any) => {
         // convert file to base64 encoded
         const file = event.files[0];
@@ -118,48 +128,6 @@ export const CreateCarPage = () => {
             setGearSelection("")
             setSeats("")
             setPrice("")
-        }
-    }
-
-    const brandField = (value: string) => {
-        if (value === 'Audi' ||
-            value === 'Mercedes' ||
-            value === 'Peugeot' ||
-            value === 'Renault' ||
-            value === 'Volkswagen') {
-            setBrandSelection(value);
-        } else {
-            setBrandSelection('');
-        }
-    }
-
-    const typeField = (value: string) => {
-        if (value === 'Sedan' ||
-            value === 'Hatchback' ||
-            value === 'SUV' ||
-            value === 'Truck') {
-            setTypeSelection(value);
-        } else {
-            setTypeSelection('');
-        }
-    }
-
-    const gearField = (value: string) => {
-        if (value === 'Automatic' ||
-            value === 'Manual') {
-            setGearSelection(value);
-        } else {
-            setGearSelection('');
-        }
-    }
-
-    const engineField = (value: string) => {
-        if (value === 'Placeholder1' ||
-            value === 'Placeholder2' ||
-            value === 'Placeholder3') {
-            setEngineSelection(value);
-        } else {
-            setEngineSelection('');
         }
     }
 

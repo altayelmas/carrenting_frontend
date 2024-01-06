@@ -96,6 +96,7 @@ export const Login = () => {
                         <div className="loginBox">
                             <label className="text-black" htmlFor="username">Username</label>
                             <input type="text"
+                                   value={username}
                                    id="username"
                                    placeholder="Enter your username"
                                    style={{ width:"250px" }}
