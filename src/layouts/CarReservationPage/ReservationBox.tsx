@@ -109,7 +109,7 @@ export const ReservationBox: React.FC<{
                 </div>
                 {!signedIn && props.car?.isAvailable &&
                     <Link to='/login' className='btn btn-success btn-lg'>Sign In</Link>}
-                {signedIn && props.car?.isAvailable &&
+                {signedIn && props.car?.isAvailable && localStorage.getItem("authState") !== "2" &&
                     <button className='btn btn-success btn-lg' onClick={onButtonClick}>Reservation</button>}
                 <hr/>
                 {props.car?.isAvailable &&
